@@ -8,3 +8,8 @@ Vampiring with peers
 See [React-Native Environment Setup](https://reactnative.dev/docs/environment-setup)
 
 Run `npm run android` or `npm run ios`
+
+### Contributors
+**Senpai:** Adam Merritt
+
+**Kohai:** Abigail Williams
