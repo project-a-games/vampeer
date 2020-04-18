@@ -1,5 +1,5 @@
 # Vampeer
-Vampiring with friends
+Vampiring with peers
 
 ### [Project Development Cloud](https://drive.google.com/drive/folders/1sOx2IHF1yfBQR5zXGFhM28WfHAC_K6ue?usp=sharing)
 
