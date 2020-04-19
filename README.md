@@ -10,6 +10,6 @@ See [React-Native Environment Setup](https://reactnative.dev/docs/environment-se
 Run `npm run android` or `npm run ios`
 
 ### Contributors
-**Senpai:** Adam Merritt
+**Senpai:** Adam Merritt <3
 
 **Kohai:** Abigail Williams
