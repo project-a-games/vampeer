@@ -19,6 +19,9 @@
     "react/jsx-props-no-spreading": "off",
     "no-console": "off",
     "max-len": "off",
-    "no-multiple-empty-lines": "error"
+    "no-multiple-empty-lines": "error",
+    "react/no-unused-state": "warn",
+    "max-classes-per-file": "off",
+    "class-methods-use-this": "warn"
   }
 }

@@ -1,14 +1,17 @@
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import { StackActionHelpers } from '@react-navigation/native';
+import { createStackNavigator, StackNavigationOptions, CardStyleInterpolators } from '@react-navigation/stack';
 import { makeStore } from './state/store';
-import { Screens } from './state/app_state';
-import { LoginScreen } from './views/login_screen';
-import { SignUpScreen } from './views/sign_up_screen';
+import { SignUpScreen } from './views/session/sign_up_screen';
+import { LoginScreen } from './views/session/login_screen';
+import { Authentication } from './views/session/screens';
 
-const Stack = createStackNavigator();
+const MainStack = createStackNavigator<typeof Authentication>();
+
+const options: StackNavigationOptions = {
+    cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+};
 
 export class VampeerMain extends React.PureComponent {
   private _store: Store;
@@ -22,10 +25,10 @@ export class VampeerMain extends React.PureComponent {
   render() {
       return (
           <Provider store={this._store}>
-              <Stack.Navigator>
-                  <Stack.Screen name={Screens.Main.Login} component={LoginScreen} />
-                  <Stack.Screen name={Screens.Main.SignUp} component={SignUpScreen} />
-              </Stack.Navigator>
+              <MainStack.Navigator screenOptions={options}>
+                  <MainStack.Screen name="Login" component={LoginScreen} />
+                  <MainStack.Screen name="SignUp" component={SignUpScreen} />
+              </MainStack.Navigator>
           </Provider>
       );
   }

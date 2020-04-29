@@ -46,18 +46,3 @@ export const styles = StyleSheet.create({
         margin: 10,
     },
 });
-
-export const emailInputProps: TextInput['props'] = {
-    style: styles.textInputs,
-    placeholderTextColor: 'grey',
-    placeholder: 'Email',
-    textContentType: 'emailAddress',
-};
-
-export const passwordInputProps: TextInput['props'] = {
-    style: styles.textInputs,
-    placeholder: 'Password',
-    placeholderTextColor: emailInputProps.placeholderTextColor,
-    textContentType: 'password',
-    secureTextEntry: true,
-};
