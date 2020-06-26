@@ -1,0 +1,36 @@
+{
+  "private": true,
+  "name": "vampeer",
+  "version": "1.0.0",
+  "description": "Monorepo for Vampeer",
+  "main": "index.js",
+  "scripts": {
+    "build": "lerna run build --parallel",
+    "watch": "lerna run watch --parallel",
+    "prepare": "lerna bootstrap --hoist --nohoist=*react-native* && npm run build",
+    "android": "lerna run android",
+    "clean": "lerna clean --yes && lerna exec -- rm -rf package-lock.json && rm -rf node_modules"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/project-a-games/vampeer.git"
+  },
+  "author": "Adam Merritt - amerrit2@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/project-a-games/vampeer/issues"
+  },
+  "homepage": "https://github.com/project-a-games/vampeer#readme",
+  "devDependencies": {
+    "lerna": "^3.22.1",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^2.5.0",
+    "typescript": "^3.9.5"
+  }
+}

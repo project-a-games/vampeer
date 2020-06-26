@@ -1,0 +1,11 @@
+{
+  "name": "vampeer-service-client",
+  "version": "1.0.0",
+  "description": "Client http library for vampper-server-service",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Adam Merritt - amerrit2@gmail.com",
+  "license": "ISC"
+}

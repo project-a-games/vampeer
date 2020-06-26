@@ -1,0 +1,45 @@
+{
+  "name": "vampeer-service-server",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Service for vampeer mobile app",
+  "scripts": {
+    "build": "tsc",
+    "watch": "concurrently \"tsc -w\" \"node ./.watch.js\"",
+    "lint": "eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/project-a-games/vampeer-service.git"
+  },
+  "author": "Adam Merritt [amerrit2@gmail.com]",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/project-a-games/vampeer-service/issues"
+  },
+  "homepage": "https://github.com/project-a-games/vampeer-service#readme",
+  "dependencies": {
+    "ajv": "^6.12.2",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-jwt": "^5.3.3",
+    "express-jwt-authz": "^2.4.0",
+    "jwks-rsa": "^1.8.1",
+    "mongoose": "^5.9.20",
+    "serve-favicon": "^2.5.0",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.19.0",
+    "@types/express": "^4.17.6",
+    "@types/express-jwt": "0.0.42",
+    "@types/json-schema": "^7.0.4",
+    "@types/mongoose": "^5.7.28",
+    "@types/node": "^13.13.5",
+    "@types/serve-favicon": "^2.5.0",
+    "chokidar": "^3.4.0",
+    "concurrently": "^5.2.0"
+  }
+}

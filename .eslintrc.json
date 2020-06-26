@@ -1,0 +1,50 @@
+{
+  "root": true,
+  "extends": "airbnb",
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "object-curly-spacing": ["error", "always"],
+    "semi": "error",
+    "import/extensions": "off",
+    "no-unused-vars": "off",
+    "import/no-unresolved": "off",
+    "import/prefer-default-export": "off",
+    "no-trailing-spaces": "error",
+    "no-underscore-dangle": "off",
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".tsx"] }],
+    "linebreak-style": "off",
+    "react/jsx-indent": ["error", 4],
+    "react/jsx-props-no-spreading": "off",
+    "react/jsx-indent-props": "off",
+    "no-console": "off",
+    "max-len": "off",
+    "no-multiple-empty-lines": "error",
+    "react/no-unused-state": "warn",
+    "max-classes-per-file": "off",
+    "class-methods-use-this": "warn",
+    "no-nested-ternary": "off",
+    "no-unused-expressions": "off",
+    "no-useless-escape": "off",
+    "comma-dangle": ["error", "always-multiline"],
+    "camelcase": "off",
+    "no-var": "error",
+    "indent": [
+        "error",
+        4,
+        {
+            "SwitchCase": 1
+        }
+    ],
+    "arrow-parens": "off",
+    "no-restricted-globals": "off",
+    "lines-between-class-members": "off",
+    "no-restricted-syntax": "off",
+    "no-await-in-loop": "off",
+    "@typescript-eslint/no-unused-vars": ["warn", {
+        "vars": "all",
+        "args": "after-used",
+        "ignoreRestSiblings": false
+    }]
+  }
+}
