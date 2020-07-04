@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import {
-    View, Text, StyleSheet,
+    View, Text, StyleSheet, Alert,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { Button } from 'react-native-elements';
+import { Dispatch } from 'redux';
 import { sharedStyles } from '../shared_styles';
-import { launchAuthorization } from '../../state/app_actions';
+import { launchAuthorization, receiveCredentials } from '../../state/app_actions';
+import { requestAuthorization } from '../../network/requestor';
+import { alertError } from '../../util/errors';
+import { Action } from '../../state/tools/actions';
 
 const styles = StyleSheet.create({
     loading: {
@@ -20,15 +24,33 @@ const styles = StyleSheet.create({
     },
 });
 
+async function executeAuth(dispatch: Dispatch<Action<any>>) {
+    try {
+        const credentials = await requestAuthorization();
+        dispatch(receiveCredentials(credentials));
+    } catch (e) {
+        alertError(e.message);
+        e.action && dispatch(e.action);
+    }
+}
+
 export const AuthorizationScreen = () => {
+    const [showingWeb, setShowingWeb] = useState(false);
     const dispatch = useDispatch();
 
-    const onAuthPress = () => dispatch(launchAuthorization());
+    const onAuthPress = async () => {
+        setShowingWeb(true);
+        await executeAuth(dispatch);
+        setShowingWeb(false);
+    };
 
     useEffect(() => {
-        console.log('Auth screen effect - launching auth');
-        dispatch(launchAuthorization());
-    });
+        (async () => {
+            setShowingWeb(true);
+            await executeAuth(dispatch);
+            setShowingWeb(false);
+        })();
+    }, [setShowingWeb, dispatch]);
 
     return (
         <View style={sharedStyles.centeredView}>
@@ -38,6 +60,7 @@ export const AuthorizationScreen = () => {
                     raised
                     title="Login/Sign Up"
                     onPress={onAuthPress}
+                    loading={showingWeb}
                     containerStyle={{
                         flex: 1,
                         margin: 10,

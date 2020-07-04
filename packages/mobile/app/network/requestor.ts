@@ -1,8 +1,8 @@
 import Auth0 from 'react-native-auth0';
-import auth0Config from '../../util/auth0.json';
-import { Credentials, UserData } from '../app_state';
-import { AuthError, InvalidResponseError } from '../../util/errors';
-import { isJson } from '../../util/utilities';
+import auth0Config from '../util/auth0.json';
+import { Credentials, UserData } from '../state/app_state';
+import { AuthError, InvalidResponseError } from '../util/errors';
+import { isJson } from '../util/utilities';
 
 const auth0 = new Auth0(auth0Config);
 
@@ -42,10 +42,7 @@ async function apiRequest<Response = any>({ accessToken }: Credentials, name: st
 
 export async function requestAuthorization(): Promise<Credentials> {
     try {
-        console.log('Calling authorize');
-        const result = await auth0.webAuth.authorize({ scope: Scope, audience: `'${ApiUrl}'` });
-        console.log('Authorized');
-        return result;
+        return await auth0.webAuth.authorize({ scope: Scope, audience: `'${ApiUrl}'` });
     } catch (e) {
         throw new AuthError();
     }

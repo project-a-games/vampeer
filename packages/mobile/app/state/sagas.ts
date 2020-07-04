@@ -1,19 +1,19 @@
 import {
-    takeEvery, call, put, takeLatest, select,
+    takeEvery, call, put, select,
 } from 'redux-saga/effects';
 import {
-    getInternetCredentials, setInternetCredentials, resetInternetCredentials,
+    getInternetCredentials,
 } from 'react-native-keychain';
 import {
-    receiveCredentials, appStarted, launchAuthorization, recieveUserData,
+    receiveCredentials, appStarted, recieveUserData,
 } from './app_actions';
 import {
-    requestAuthorization, requestUserData, refreshCredentials, requestLogout,
-} from './network/requestor';
+    requestUserData, refreshCredentials,
+} from '../network/requestor';
 import { VampeerState, Credentials } from './app_state';
 import { sleep } from '../util/utilities';
 import {
-    SagaError, alertError,
+    NetworkError, alertError,
 } from '../util/errors';
 
 type CallType<F extends (...args: any[]) => any> = ReturnType<F> extends PromiseLike<infer T> ? T : ReturnType<F>;
@@ -48,25 +48,13 @@ function* appStartedSaga() {
     }
 }
 
-function* launchAuthSaga() {
-    console.log('Launch auth saga');
-
-    const credentials: CallType<typeof requestAuthorization> = yield call(requestAuthorization);
-
-    console.log('credentials got');
-
-    yield call(setInternetCredentials, ServerName, 'DEFAULT', JSON.stringify(credentials));
-    yield put(receiveCredentials(credentials));
-    yield loadUserData();
-}
-
 function wrapSaga(fn: (...args: any[]) => Generator) {
     return function* wrappedSaga(...args: any[]) {
         try {
             yield call(fn, ...args);
         } catch (e) {
             console.log('Received error from saga - ', e.constructor.name);
-            if (e instanceof SagaError) {
+            if (e instanceof NetworkError) {
                 yield call(alertError, e.message);
                 if (e.action) yield put(e.action());
             } else {
@@ -79,5 +67,4 @@ function wrapSaga(fn: (...args: any[]) => Generator) {
 
 export function* mainSaga() {
     yield takeEvery(appStarted.type, wrapSaga(appStartedSaga));
-    yield takeLatest(launchAuthorization.type, wrapSaga(launchAuthSaga));
 }

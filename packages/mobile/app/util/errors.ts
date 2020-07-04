@@ -2,19 +2,21 @@ import { AlertButton, Alert } from 'react-native';
 import { resetApplication } from '../state/app_actions';
 import { Action } from '../state/tools/actions';
 
-export abstract class SagaError extends Error {
+export abstract class NetworkError extends Error {
     public abstract action: undefined | ((...args: any) => Action<any>);
 }
 
-export class AuthError extends SagaError {
+export class AuthError extends NetworkError {
     constructor() {
         super('Authorization error');
     }
 
-    action = resetApplication;
+    action: undefined;
+
+    // action = resetApplication;
 }
 
-export class ErrorResponse extends SagaError {
+export class ErrorResponse extends NetworkError {
     constructor(message?: string) {
         super(`Backend error: ${message}`);
     }
@@ -22,7 +24,7 @@ export class ErrorResponse extends SagaError {
     action: undefined;
 }
 
-export class InvalidResponseError extends SagaError {
+export class InvalidResponseError extends NetworkError {
     constructor(body: string) {
         super('Invalid response from server');
         console.log('Invalid respnose error: ', body);
