@@ -3,5 +3,10 @@
     "packages/*",
     "packages/service/*"
   ],
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "command": {
+    "bootstrap": {
+      "ignore": "vampeer-mobile"
+    }
+  }
 }

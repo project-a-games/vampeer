@@ -42,7 +42,10 @@ async function apiRequest<Response = any>({ accessToken }: Credentials, name: st
 
 export async function requestAuthorization(): Promise<Credentials> {
     try {
-        return await auth0.webAuth.authorize({ scope: Scope, audience: `'${ApiUrl}'` });
+        console.log('Calling authorize');
+        const result = await auth0.webAuth.authorize({ scope: Scope, audience: `'${ApiUrl}'` });
+        console.log('Authorized');
+        return result;
     } catch (e) {
         throw new AuthError();
     }

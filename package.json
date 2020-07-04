@@ -7,9 +7,11 @@
   "scripts": {
     "build": "lerna run build --parallel",
     "watch": "lerna run watch --parallel",
-    "prepare": "lerna bootstrap --hoist --nohoist=*react-native* && npm run build",
+    "prepare": "lerna bootstrap --hoist && lerna exec --scope vampeer-mobile -- npm i && npm run build",
     "android": "lerna run android",
-    "clean": "lerna clean --yes && lerna exec -- rm -rf package-lock.json && rm -rf node_modules"
+    "ios": "lerna run ios",
+    "service": "lerna run service",
+    "clean": "lerna clean --yes && rm -rf node_modules"
   },
   "repository": {
     "type": "git",

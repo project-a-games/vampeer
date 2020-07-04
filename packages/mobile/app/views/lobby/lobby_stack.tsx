@@ -2,7 +2,6 @@ import React from 'react';
 import {
     createStackNavigator, StackNavigationOptions, CardStyleInterpolators, HeaderStyleInterpolators,
 } from '@react-navigation/stack';
-import { Nav, RouteProps, RouteNames } from '../routes';
 import { LobbyScreen } from './lobby_screen';
 
 const Stack = createStackNavigator();

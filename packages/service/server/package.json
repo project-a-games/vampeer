@@ -8,7 +8,8 @@
     "watch": "concurrently \"tsc -w\" \"node ./.watch.js\"",
     "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/index.js"
+    "start": "dotenv node -- ./src/index.js",
+    "service": "npm run start"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,7 @@
     "@types/node": "^13.13.5",
     "@types/serve-favicon": "^2.5.0",
     "chokidar": "^3.4.0",
-    "concurrently": "^5.2.0"
+    "concurrently": "^5.2.0",
+    "dotenv-cli": "^3.2.0"
   }
 }

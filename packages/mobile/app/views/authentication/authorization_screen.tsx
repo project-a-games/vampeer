@@ -1,11 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     View, Text, StyleSheet,
 } from 'react-native';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Button } from 'react-native-elements';
 import { sharedStyles } from '../shared_styles';
-import { Nav, RouteNames } from '../routes';
 import { launchAuthorization } from '../../state/app_actions';
 
 const styles = StyleSheet.create({
@@ -21,20 +20,14 @@ const styles = StyleSheet.create({
     },
 });
 
-type AuthProps = {
-    onLaunchAuth: () => void;
-} & Nav<RouteNames.Authorization>
+export const AuthorizationScreen = () => {
+    const dispatch = useDispatch();
 
-const AuthComponent = ({ onLaunchAuth }: AuthProps) => {
-    const [hasLaunched, setHasLaunched] = useState(false);
-
-    const onAuthPress = useCallback(() => {
-        onLaunchAuth();
-    }, [onLaunchAuth]);
+    const onAuthPress = () => dispatch(launchAuthorization());
 
     useEffect(() => {
-        onLaunchAuth();
-        setHasLaunched(true);
+        console.log('Auth screen effect - launching auth');
+        dispatch(launchAuthorization());
     });
 
     return (
@@ -45,7 +38,6 @@ const AuthComponent = ({ onLaunchAuth }: AuthProps) => {
                     raised
                     title="Login/Sign Up"
                     onPress={onAuthPress}
-                    loading={!hasLaunched}
                     containerStyle={{
                         flex: 1,
                         margin: 10,
@@ -58,12 +50,3 @@ const AuthComponent = ({ onLaunchAuth }: AuthProps) => {
         </View>
     );
 };
-
-export const AuthorizationScreen = connect(
-    undefined,
-    (dispatch) => ({
-        onLaunchAuth: () => {
-            dispatch(launchAuthorization());
-        },
-    }),
-)(AuthComponent);

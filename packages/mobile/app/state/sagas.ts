@@ -16,7 +16,6 @@ import {
     SagaError, alertError,
 } from '../util/errors';
 
-
 type CallType<F extends (...args: any[]) => any> = ReturnType<F> extends PromiseLike<infer T> ? T : ReturnType<F>;
 
 const ServerName = 'VAMPEER_SERVER';
@@ -31,8 +30,8 @@ function* appStartedSaga() {
     console.log('Running appStartedSaga!');
 
     // Comment out to retain login
-    yield call(resetInternetCredentials, ServerName);
-    yield call(requestLogout);
+    // yield call(resetInternetCredentials, ServerName);
+    // yield call(requestLogout);
     // ---
 
     yield call(sleep, 1);
@@ -50,7 +49,11 @@ function* appStartedSaga() {
 }
 
 function* launchAuthSaga() {
+    console.log('Launch auth saga');
+
     const credentials: CallType<typeof requestAuthorization> = yield call(requestAuthorization);
+
+    console.log('credentials got');
 
     yield call(setInternetCredentials, ServerName, 'DEFAULT', JSON.stringify(credentials));
     yield put(receiveCredentials(credentials));
@@ -62,6 +65,7 @@ function wrapSaga(fn: (...args: any[]) => Generator) {
         try {
             yield call(fn, ...args);
         } catch (e) {
+            console.log('Received error from saga - ', e.constructor.name);
             if (e instanceof SagaError) {
                 yield call(alertError, e.message);
                 if (e.action) yield put(e.action());
@@ -72,7 +76,6 @@ function wrapSaga(fn: (...args: any[]) => Generator) {
         }
     };
 }
-
 
 export function* mainSaga() {
     yield takeEvery(appStarted.type, wrapSaga(appStartedSaga));

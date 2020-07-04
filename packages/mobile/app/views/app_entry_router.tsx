@@ -3,7 +3,7 @@ import {
     View, Text, ActivityIndicator,
 } from 'react-native';
 import { ThemeProvider, Theme } from 'react-native-elements';
-import { connect } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import { sharedStyles } from './shared_styles';
 import { AuthorizationScreen } from './authentication/authorization_screen';
 import { VampeerState } from '../state/app_state';
@@ -23,16 +23,20 @@ interface AuthProps {
 
 function getComponent(credentials: AuthProps['credentials']) {
     switch (credentials) {
-    case null:
-        return <AuthorizationScreen />;
-    case undefined:
-        return <LoadingScreen />;
-    default:
-        return <LobbyStack />;
+        case null:
+            return <AuthorizationScreen />;
+        case undefined:
+            return <LoadingScreen />;
+        default:
+            return <LobbyStack />;
     }
 }
 
-function AppEntryRouterComponent({ credentials, theme }: AuthProps) {
+const stateSelector = ({ credentials, theme }: VampeerState) => ({ credentials, theme });
+
+export function AppEntryRouter() {
+    const { credentials, theme } = useSelector(stateSelector, shallowEqual);
+
     return (
         <View style={{ flex: 1 }}>
             <ThemeProvider theme={theme}>
@@ -41,8 +45,3 @@ function AppEntryRouterComponent({ credentials, theme }: AuthProps) {
         </View>
     );
 }
-
-export const AppEntryRouter = connect(
-    ({ credentials, theme }: VampeerState) => ({ credentials, theme }),
-    null,
-)(AppEntryRouterComponent);
