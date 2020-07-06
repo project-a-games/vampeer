@@ -11,6 +11,16 @@ Run `npm run android` or `npm run ios`
 
 ## Dev Notes
 
+* New Setup
+    - Install w/o hoisting
+    - IOS has some weird fix involving adding/removing quotes from some setting (look up error message)
+    - See auth0 Quick Start React-Native for auth0 configuration
+        - Configure Android
+            - Edit AndroidManifest.xml: "you must make sure the activity you are going to receive the authentication on has a launchMode value of singleTask and that it declares the following intent filter (see the React Native docs for more information)
+        - Configure IOS
+
+
+
 * Persistance
     - [AsyncStorage](https://github.com/react-native-community/async-storage)
         - Built in to react-native

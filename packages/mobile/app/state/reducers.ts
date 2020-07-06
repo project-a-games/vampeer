@@ -11,7 +11,7 @@ import { Action } from './tools/actions';
 const receiveData = produce((draft: VampeerState, action: Action<any>) => {
     if (receiveCredentials.is(action)) {
         draft.credentials = action.payload;
-    } if (recieveUserData.is(action)) {
+    } else if (recieveUserData.is(action)) {
         draft.userData = action.payload;
     }
 });
@@ -21,7 +21,6 @@ const updateState = produce((draft: VampeerState, action: Action<any>) => {
         draft.theme = action.payload;
     }
 });
-
 
 const reducers = [receiveData, updateState];
 
@@ -33,7 +32,6 @@ export const mainReducer: Reducer<VampeerState, Action<any>> = (state: VampeerSt
 
     let newState = state;
     reducers.forEach((reducer) => {
-        const oldState = newState;
         newState = reducer(newState, action);
     });
 

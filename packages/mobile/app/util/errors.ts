@@ -1,5 +1,4 @@
 import { AlertButton, Alert } from 'react-native';
-import { resetApplication } from '../state/app_actions';
 import { Action } from '../state/tools/actions';
 
 export abstract class NetworkError extends Error {
@@ -7,8 +6,8 @@ export abstract class NetworkError extends Error {
 }
 
 export class AuthError extends NetworkError {
-    constructor() {
-        super('Authorization error');
+    constructor(message?: string) {
+        super(`Authorization error${message ? `: ${message}` : ''}`);
     }
 
     action: undefined;
@@ -34,7 +33,7 @@ export class InvalidResponseError extends NetworkError {
 }
 
 const ErrorTitles = ['Woopsy!', 'Oops!', 'What in tarnation!', 'Whoopsy Daisy!', 'Sorry!'];
-const chooseTitle = () => ErrorTitles[Math.round(Math.random() * ErrorTitles.length)];
+const chooseTitle = () => ErrorTitles[Math.round(Math.random() * (ErrorTitles.length - 1))];
 export const alertError = (message: string, buttons?: AlertButton[], cancelable?: boolean) => new Promise((a) => {
     Alert.alert(chooseTitle(), message, buttons, {
         cancelable,

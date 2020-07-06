@@ -3,6 +3,7 @@ import {
     createStackNavigator, StackNavigationOptions, CardStyleInterpolators, HeaderStyleInterpolators,
 } from '@react-navigation/stack';
 import { LobbyScreen } from './lobby_screen';
+import { RouteNames } from '../routes';
 
 const Stack = createStackNavigator();
 

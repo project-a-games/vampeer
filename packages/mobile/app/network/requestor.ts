@@ -30,7 +30,7 @@ async function apiRequest<Response = any>({ accessToken }: Credentials, name: st
     });
 
     if (response.status === Status.Unauthorized) {
-        throw new AuthError();
+        throw new AuthError('API rejected token');
     }
 
     if (isJson(response)) {
@@ -42,9 +42,11 @@ async function apiRequest<Response = any>({ accessToken }: Credentials, name: st
 
 export async function requestAuthorization(): Promise<Credentials> {
     try {
+        console.log('-----------------');
         return await auth0.webAuth.authorize({ scope: Scope, audience: `'${ApiUrl}'` });
     } catch (e) {
-        throw new AuthError();
+        console.log('WebAuth failed: ', e.message);
+        throw new AuthError(`WebAuth failed${e.message ? `: ${e.message}` : ''}`);
     }
 }
 

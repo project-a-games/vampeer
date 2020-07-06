@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/project-a-games/vampeer.git"
+    "url": "https://github.com/project-a-games/vampeer.git"
   },
   "author": "Adam Merritt - amerrit2@gmail.com",
   "license": "ISC",

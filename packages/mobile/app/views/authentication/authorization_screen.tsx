@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import {
-    View, Text, StyleSheet, Alert,
+    View, Text, StyleSheet,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { Button } from 'react-native-elements';
 import { Dispatch } from 'redux';
 import { sharedStyles } from '../shared_styles';
-import { launchAuthorization, receiveCredentials } from '../../state/app_actions';
+import { receiveCredentials } from '../../state/app_actions';
 import { requestAuthorization } from '../../network/requestor';
 import { alertError } from '../../util/errors';
 import { Action } from '../../state/tools/actions';
@@ -25,8 +25,10 @@ const styles = StyleSheet.create({
 });
 
 async function executeAuth(dispatch: Dispatch<Action<any>>) {
+    console.log('Calling request auth');
     try {
         const credentials = await requestAuthorization();
+        console.log('Dispatching receive credentials');
         dispatch(receiveCredentials(credentials));
     } catch (e) {
         alertError(e.message);
