@@ -2,7 +2,7 @@ import { Reducer } from 'redux';
 import { produce } from 'immer';
 import { VampeerState, initialState } from './app_state';
 import {
-    receiveCredentials, updateTheme, recieveUserData,
+    receiveCredentials, updateTheme, receiveUserData,
 } from './app_actions';
 import { Action } from './tools/actions';
 
@@ -11,7 +11,7 @@ import { Action } from './tools/actions';
 const receiveData = produce((draft: VampeerState, action: Action<any>) => {
     if (receiveCredentials.is(action)) {
         draft.credentials = action.payload;
-    } else if (recieveUserData.is(action)) {
+    } else if (receiveUserData.is(action)) {
         draft.userData = action.payload;
     }
 });

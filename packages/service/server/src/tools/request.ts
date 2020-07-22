@@ -1,9 +1,8 @@
-import {request as httpsRequest, RequestOptions} from 'https';
-
+import { request as httpsRequest, RequestOptions } from 'https';
 
 export function request(url: string, options: RequestOptions) {
     return new Promise((a, r) => {
-        console.log('Making requst: ', url);
+        console.log('Making request: ', url);
         httpsRequest(url, options, res => {
             console.log('Callback received: ', res);
             let data = '';
@@ -17,5 +16,5 @@ export function request(url: string, options: RequestOptions) {
         }).on('error', error => {
             r(error);
         });
-    }); 
+    });
 }

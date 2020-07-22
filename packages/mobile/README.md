@@ -18,7 +18,16 @@ Run `npm run android` or `npm run ios`
         - Configure Android
             - Edit AndroidManifest.xml: "you must make sure the activity you are going to receive the authentication on has a launchMode value of singleTask and that it declares the following intent filter (see the React Native docs for more information)
         - Configure IOS
+    - Setup react-native-vector-icons
+        - add to android/app/build.gradle: `apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"`
 
+* Localhost network setup
+    - https://revs.runtime-revolution.com/connecting-react-native-to-localhost-65e7ddf43d02
+    - Updated AndroidManifest.xml with:
+        - `android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config"`
+    - Added network_security_config.xml to main/res/xml
+    - Go to debug settings in android and set network to localhost ip
 
 
 * Persistance

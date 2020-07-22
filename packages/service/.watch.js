@@ -2,7 +2,7 @@ const chokidar = require('chokidar');
 const {promises} = require('fs');
 const path = require('path');
 
-const watcher = chokidar.watch('./src/**/*.ts');
+const watcher = chokidar.watch('./*/src/**/*.ts');
 
 watcher.on('unlink', async (filePath) => {
   if (filePath.endsWith('.d.ts')) return;

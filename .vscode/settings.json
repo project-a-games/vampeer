@@ -11,5 +11,8 @@
             "when": "$(basename)",
         },
         "**/*.d.ts": true
-    }
+    },
+    "cSpell.words": [
+        "vampeer"
+    ]
 }

@@ -5,7 +5,7 @@ import {
     getInternetCredentials, setInternetCredentials, resetInternetCredentials,
 } from 'react-native-keychain';
 import {
-    receiveCredentials, appStarted, recieveUserData,
+    receiveCredentials, appStarted, receiveUserData,
 } from './app_actions';
 import {
     requestUserData, refreshCredentials, requestLogout,
@@ -22,7 +22,7 @@ const ServerName = 'VAMPEER_SERVER';
 function* loadUserData() {
     const credentials = yield select((state: VampeerState) => state.credentials);
     const payload: CallType<typeof requestUserData> = yield call(requestUserData, credentials);
-    yield put(recieveUserData(payload));
+    yield put(receiveUserData(payload));
 }
 
 function* appStartedSaga() {
@@ -42,8 +42,8 @@ function* appStartedSaga() {
         console.log('got keychain: ', keychainCredentials);
         const credentials: Credentials = JSON.parse(keychainCredentials.password);
         // Todo - only refresh when needed (decode token and compare expiry)
-        const refreshedCredentials: CallType<typeof refreshCredentials> = yield call(refreshCredentials, credentials);
-        yield put(receiveCredentials(refreshedCredentials));
+        // const refreshedCredentials: CallType<typeof refreshCredentials> = yield call(refreshCredentials, credentials);
+        yield put(receiveCredentials(credentials));
     } else {
         console.log('Setting creds to null');
         yield put(receiveCredentials(null));
@@ -55,7 +55,7 @@ function* receiveCredentialsSaga({ payload }: ReturnType<typeof receiveCredentia
         yield call(setInternetCredentials, ServerName, 'DEFAULT', JSON.stringify(payload));
         yield call(loadUserData);
     } else {
-        yield put(recieveUserData(undefined));
+        yield put(receiveUserData(undefined));
     }
 }
 
@@ -70,7 +70,7 @@ function wrapSaga(fn: (...args: any[]) => Generator) {
                 yield call(alertError, e.message);
                 if (e.action) yield put(e.action());
             } else {
-                console.log('rethrowing');
+                console.log('re-throwing');
                 throw e;
             }
         }

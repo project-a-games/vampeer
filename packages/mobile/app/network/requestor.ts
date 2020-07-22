@@ -1,25 +1,32 @@
 import Auth0 from 'react-native-auth0';
+import { User } from '@project-a/vampeer-shared';
 import auth0Config from '../util/auth0.json';
-import { Credentials, UserData } from '../state/app_state';
-import { AuthError, InvalidResponseError } from '../util/errors';
-import { isJson } from '../util/utilities';
+import { Credentials } from '../state/app_state';
+import { UnauthorizedError, UnexpectedResponseError } from '../util/errors';
 
 const auth0 = new Auth0(auth0Config);
+const ProdApi = 'https://vampeer-service.herokuapp.com/api';
 
-const ApiUrl = 'https://vampeer-service.herokuapp.com/api';
+const ApiUrl = __DEV__ // eslint-disable-line no-undef
+    ? 'http://192.168.1.52:5000/api'
+    : ProdApi;
+
 const Scope = 'openid profile email offline_access';
 
-const AuthorizedApi = `${ApiUrl}/auth`;
+const paths = {
+    public: `${ApiUrl}`,
+    auth: `${ApiUrl}/auth`,
+};
 
 enum Status {
     Unauthorized = 401,
 }
 
-async function apiRequest<Response = any>({ accessToken }: Credentials, name: string, input: any) {
-    const response = await fetch(AuthorizedApi, { // eslint-disable-line no-undef
+async function apiRequest<Response = any>(url: string, name: string, input: any, jwt?: string) {
+    const response = await fetch(url, { // eslint-disable-line no-undef
         method: 'POST',
         headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${jwt}`,
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
@@ -30,23 +37,22 @@ async function apiRequest<Response = any>({ accessToken }: Credentials, name: st
     });
 
     if (response.status === Status.Unauthorized) {
-        throw new AuthError('API rejected token');
+        throw new UnauthorizedError('API rejected token');
     }
 
     if (isJson(response)) {
         return response.json() as Promise<Response>;
     }
 
-    throw new InvalidResponseError(await response.text());
+    throw new UnexpectedResponseError(await response.text());
 }
 
 export async function requestAuthorization(): Promise<Credentials> {
     try {
-        console.log('-----------------');
-        return await auth0.webAuth.authorize({ scope: Scope, audience: `'${ApiUrl}'` });
+        return await auth0.webAuth.authorize({ scope: Scope, audience: `'${ProdApi}'` });
     } catch (e) {
         console.log('WebAuth failed: ', e.message);
-        throw new AuthError(`WebAuth failed${e.message ? `: ${e.message}` : ''}`);
+        throw new UnauthorizedError(`WebAuth failed${e.message ? `: ${e.message}` : ''}`);
     }
 }
 
@@ -60,5 +66,5 @@ export function refreshCredentials({ refreshToken }: Credentials): Promise<Crede
 }
 
 export function requestUserData(credentials: Credentials) {
-    return apiRequest<UserData>(credentials, 'getUserData', {});
+    return apiRequest<User>(paths.auth, 'getUserData', {}, credentials.accessToken);
 }

@@ -1,14 +1,11 @@
-import { Types, Schema, model, Document } from "mongoose";
-import { User } from "./users";
-
-export interface Village extends Document {
-    name: string;
-    members: User[];
-}
+import {
+    Types, Schema, model, Document,
+} from 'mongoose';
+import { Village } from '@project-a/vampeer-shared';
 
 const villageSchema = new Schema({
-    name: {type: String},
+    name: { type: String },
     members: [Types.ObjectId],
 });
 
-export const Village = model<Village>('Village', villageSchema);
+export const MongoVillage = model<Village & Document>('Village', villageSchema);

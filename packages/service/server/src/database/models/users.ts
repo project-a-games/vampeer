@@ -1,14 +1,11 @@
-import { Types, Schema, model, Document } from 'mongoose';
-import { Village } from './villages';
+import {
+    Types, Schema, model, Document,
+} from 'mongoose';
+import { User } from '@project-a/vampeer-shared';
 
-export interface User extends Document {
-    email: string;
-    villages: Village[];
-};
-
-const userSchema =  new Schema({
-    email: {type: String, required: true, unique: true},
-    villages: {type: Types.ObjectId},
+const userSchema = new Schema({
+    email: { type: String, required: true, unique: true },
+    villages: [Types.ObjectId],
 });
 
-export const User = model<User>('User', userSchema);
+export const MongoUser = model<User & Document>('User', userSchema);

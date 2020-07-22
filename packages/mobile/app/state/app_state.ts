@@ -1,4 +1,5 @@
 import { Theme } from 'react-native-elements';
+import { Village, User } from '@project-a/vampeer-shared';
 
 export interface Credentials {
     accessToken: string;
@@ -9,26 +10,15 @@ export interface Credentials {
     refreshToken: string;
 }
 
-interface Village {
-    id: string;
-    name: string;
-    villagers: UserData[];
-}
-
 interface GameState {
     activeVillage: Village;
-}
-
-export interface UserData {
-    email: string;
-    villages: Village[];
 }
 
 export interface VampeerState {
     credentials?: Credentials | null;
     theme?: Theme;
-    userData?: UserData;
     gameState?: GameState;
+    user?: User;
 }
 
 export const initialState: VampeerState = {

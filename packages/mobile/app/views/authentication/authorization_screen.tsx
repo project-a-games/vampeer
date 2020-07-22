@@ -28,7 +28,6 @@ async function executeAuth(dispatch: Dispatch<Action<any>>) {
     console.log('Calling request auth');
     try {
         const credentials = await requestAuthorization();
-        console.log('Dispatching receive credentials');
         dispatch(receiveCredentials(credentials));
     } catch (e) {
         alertError(e.message);

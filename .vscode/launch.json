@@ -5,6 +5,20 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Debug Service",
+            "cwd": "${workspaceFolder}/packages/service/server",
+            "request": "launch",
+            "runtimeArgs": [
+                "run-script",
+                "start"
+            ],
+            "runtimeExecutable": "npm",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node"
+        },
+        {
             "name": "Debug Android",
             "cwd": "${workspaceFolder}/packages/mobile",
             "type": "reactnative",

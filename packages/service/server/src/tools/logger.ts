@@ -1,27 +1,26 @@
 import { createLogger, format, transports } from 'winston';
+import { SPLAT } from 'triple-beam';
+
+const myFormat = format.printf((info) => {
+    const {
+        timestamp, level, message, data,
+    } = info;
+
+    const dataString = data ? (data as Array<any>).map(item => JSON.stringify(item)).join(', ') : '';
+    return `${timestamp} ${level}: ${message} ${dataString}`;
+});
+
+const additionalData = format((info) => Object.assign(info, { data: info[SPLAT] }));
 
 const logger = createLogger({
     level: process.env.VERBOSITY,
-    transports: [],
+    format: format.combine(
+        format.colorize(),
+        format.timestamp(),
+        additionalData(),
+        myFormat,
+    ),
+    transports: [new transports.Console()],
 });
 
-const alignedWithColorsAndTime = format.combine(
-    format.colorize(),
-    format.metadata(),
-    format.printf(info => {
-        if (Object.keys(info.metadata).length === 0) {
-            return `${info.level}: ${info.message}`;
-        }
-
-        return `${info.level}: ${info.message} | ${JSON.stringify(info.metadata, null, 0)}`;
-    }),
-);
-
-if (true /* process.env.NODE_ENV !== 'production' */) {
-    logger.add(new transports.Console({
-        format: alignedWithColorsAndTime,
-    }));
-}
-
 export default logger;
-

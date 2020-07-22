@@ -5,7 +5,7 @@ export abstract class NetworkError extends Error {
     public abstract action: undefined | ((...args: any) => Action<any>);
 }
 
-export class AuthError extends NetworkError {
+export class UnauthorizedError extends NetworkError {
     constructor(message?: string) {
         super(`Authorization error${message ? `: ${message}` : ''}`);
     }
@@ -23,10 +23,10 @@ export class ErrorResponse extends NetworkError {
     action: undefined;
 }
 
-export class InvalidResponseError extends NetworkError {
+export class UnexpectedResponseError extends NetworkError {
     constructor(body: string) {
-        super('Invalid response from server');
-        console.log('Invalid respnose error: ', body);
+        super('Unexpected response from server');
+        console.log('Unexpected response error: ', body);
     }
 
     action: undefined;

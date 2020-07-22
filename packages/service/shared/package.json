@@ -1,0 +1,15 @@
+{
+  "name": "@project-a/vampeer-shared",
+  "version": "1.0.0",
+  "description": "Shared library library for vampeer-server-service",
+  "main": "index.js",
+  "scripts": {
+    "watch": "concurrently \"tsc -w\" \"node ../.watch.js\""
+  },
+  "author": "Adam Merritt - amerrit2@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "chokidar": "^3.4.0",
+    "concurrently": "^5.2.0"
+  }
+}
